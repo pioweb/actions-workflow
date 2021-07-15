@@ -5,17 +5,12 @@ on:
     branches: [main]
 
 jobs:
-  lint:
-    name: Lint code base
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
   deploy:
     name: Deploy source do remote server
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
       - name: test ssh connection
         uses: appleboy/ssh-action@master
         with:
@@ -38,5 +33,5 @@ jobs:
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
-          source: "build"
+          source: "build/*"
           target: "/home/piomax/domains/piomax.net/public_html/slot/subme.app"
