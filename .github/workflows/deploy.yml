@@ -35,3 +35,4 @@ jobs:
           port: ${{ secrets.PORT }}
           source: "build/*"
           target: "/home/piomax/domains/piomax.net/public_html/slot/subme.app"
+          strip_components: 1
