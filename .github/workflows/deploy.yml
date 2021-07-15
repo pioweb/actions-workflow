@@ -1,6 +1,8 @@
 name: Super-Linter
 
-on: push
+on:
+  push:
+    branches: [main]
 
 jobs:
   super-lint:
@@ -15,3 +17,19 @@ jobs:
         env:
           DEFAULT_BRANCH: main
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy:
+    name: Deploy source do remote server
+    runs-on: ubuntu-latest
+    steps:
+      - name: test c_f server ssh connection
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{secrets.KEY}}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/piomax/domains/piomax.net/public_html/slot/subme.app
+            git pull origin main
+            git status
